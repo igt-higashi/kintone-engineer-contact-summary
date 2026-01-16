@@ -54,6 +54,15 @@
     @keyframes gpt-spin {
       to { transform: rotate(360deg); }
     }
+
+    /* ボタン下の注記スタイル */
+    .gpt-note {
+      margin-top: 6px;
+      font-size: 12px;
+      color: #666;
+      line-height: 1.4;
+      white-space: normal;
+    }
   `;
     document.head.appendChild(style);
   })();
@@ -78,12 +87,23 @@
     if (overlay) overlay.remove();
   }
 
-
   kintone.events.on('app.record.detail.show', function (event) {
     if (document.getElementById('askGptBtn')) return;
+
+    // ボタンと注記をまとめるコンテナ
+    const container = document.createElement('div');
+    container.id = 'askGptContainer';
+
     const button = document.createElement('button');
     button.id = 'askGptBtn';
-    button.innerText = 'コンタクト履歴要約を更新';
+
+    // ボタン文言
+    button.innerText = 'コンタクト履歴のAI要約';
+
+    // ボタン下の注記
+    const note = document.createElement('div');
+    note.className = 'gpt-note';
+    note.innerText = '※OpenAI APIを利用して要約を生成します。利用量に応じて料金が発生します。';
 
     button.onclick = async () => {
       if (button.disabled) return;  // 二重実行防止
@@ -193,10 +213,14 @@
 
       } finally {
         // オーバーレイ解除
-        hideLoadingOverlay()
+        hideLoadingOverlay();
         button.disabled = false;
       }
     };
-    kintone.app.record.getHeaderMenuSpaceElement().appendChild(button);
+
+    // コンテナに追加して配置
+    container.appendChild(button);
+    container.appendChild(note);
+    kintone.app.record.getHeaderMenuSpaceElement().appendChild(container);
   });
 })();
