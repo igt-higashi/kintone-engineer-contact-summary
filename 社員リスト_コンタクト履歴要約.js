@@ -3,7 +3,7 @@
 
   // APIキーは直書き非推奨
   const OPENAI_API_KEY = '';
-  const ACTIVITY_APP_ID = 17;   // 技術者コンタクト活動履歴のアプリID
+  const ACTIVITY_APP_ID = 30;   // 技術者コンタクト活動履歴のアプリID
   const LINK_FIELD = '社員レコード番号';        // 「技術者」ルックアップにてコピーされた社員リストのレコード番号（$id）
   const SUMMARY_FIELD = 'コンタクト履歴要約';   // 社員リストのコンタクト履歴要約のフィールドコード
 
